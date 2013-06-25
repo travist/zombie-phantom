@@ -6,7 +6,7 @@ browser.  The motivation behind this package is that when looking for a headless
 browser solution, I really liked the API of Zombie.js as well as the full Node.js
 support behind it, however it is not a full WebKit browser.  PhantomJS on the other
 hand is a better technology in terms of headless browser, but does not have a
-native Node.js integration.  The ![Node Phantom](https://github.com/alexscheelmeyer/node-phantom)
+native Node.js integration.  The <a href="https://github.com/alexscheelmeyer/node-phantom">Node Phantom</a>
 package integrates the PhantomJS into the Node.js framework, but what it doesn't
 do, and likely so, is provide a better API like the Zombie.js framework.
 
