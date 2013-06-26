@@ -35,12 +35,83 @@ Install this package using Node Package Manager (npm)
 npm install zombie-phantom
 ```
 
-Usage
+Differences between Zombie.js
 =========================
-Using this library is going to be 'similar' to using Zombie.js.  The only major
-difference is that 1) Not all of the API's have been implemented yet, and also
-2.) The promise system in Zombie.js is not implemented.  You can, however, reproduce
-the promise system pretty easily using the ASYNC library.
+Using this library is going to be 'similar' to using Zombie.js.  I couldn't make
+it an exact replica of Zombie.js due to the nature of the asynchronous behavior
+of interacting with any API within PhantomJS.  For example, to get the text of
+an element on the page looks like the following in both Zombie.js and this module.
+
+<strong>Zombie.js</strong>
+```
+var Browser = require('zombie');
+var browser = new Browser({
+  site: 'http://localhost:8888'
+});
+
+browser.visit('/user/login', function() {
+  var text = browser.text('h1');
+  console.log(text);
+});
+```
+
+Whereas in Zombie-Phantom, everything is asynchronous... like so.
+
+<strong>Zombie-Phantom</strong>
+```
+var Browser = require('zombie');
+var browser = new Browser({
+  site: 'http://localhost:8888'
+});
+
+browser.visit('/user/login', function() {
+  browser.text('h1', function(text) {
+    console.log(text);
+  });
+});
+```
+
+Using query, queryAll, and xpath
+=================================
+Another big difference is that this library does not return actual DOM elements
+which you can use to manipulate.  It does however, return an index into a DOM
+array within the PhantomJS browser which you can use to perform the same actions
+as you would with Zombie.js.  It is easier to think of this index as a DOM element
+ID which you return back to the library to do stuff... Here is an example.
+
+```
+var _ = require('underscore');
+var async = require('async');
+var Browser = require('zombie');
+var browser = new Browser({
+  site: 'http://localhost:8888'
+});
+
+browser.visit('/user/login', function() {
+  browser.query('h1.title', function(title) {
+
+    // title is actually an ID to a DOM element here, not an actual element.
+    // But, I can still pass it along to the browser API like I would and it
+    // will still work by referencing the DOM element within PhantomJS.
+    browser.xpath('..//label', title, function(labels) {
+
+      // labels is actually just an array of ID's here, but I can still use them
+      _.each(labels, function(label) {
+        drupal.browser.text(label, function(text) {
+          console.log(text);
+        });
+      });
+    });
+  });
+});
+```
+
+Promises in Zombie-Phantom: Using Async.js
+==========================
+As you can tell, the promise system from Zombie.js has not been implemented,
+however, you can replicate this functionality using the <a href="https://github.com/caolan/async">Async.js</a>
+library.  Here is an example of using the promises from async to turn what
+was once callback hell into an easy to follow series of executions.
 
 <strong>example.js</strong>
 ```
@@ -68,3 +139,4 @@ async.series([
 });
 
 ```
+Please contribute to make this project better.
