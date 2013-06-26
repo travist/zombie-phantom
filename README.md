@@ -106,7 +106,7 @@ browser.visit('/user/login', function() {
 });
 ```
 
-Promises in Zombie-Phantom: Using Async.js
+Promises using Async.js
 ==========================
 As you can tell, the promise system from Zombie.js has not been implemented,
 however, you can replicate this functionality using the <a href="https://github.com/caolan/async">Async.js</a>
