@@ -16,7 +16,6 @@
     "url": "http://github.com/travist/zombie-phantom/issues"
   },
   "main": "./lib/zombie.js",
-  "engines": { "node": "= 0.10" },
   "dependencies": {
     "node-phantom": ">=0",
     "underscore": ">=0",
