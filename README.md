@@ -59,7 +59,7 @@ Whereas in Zombie-Phantom, everything is asynchronous... like so.
 
 <strong>Zombie-Phantom</strong>
 ```
-var Browser = require('zombie');
+var Browser = require('zombie-phantom');
 var browser = new Browser({
   site: 'http://localhost:8888'
 });
